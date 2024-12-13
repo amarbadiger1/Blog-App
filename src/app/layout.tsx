@@ -7,7 +7,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 const inter = Inter({
   subsets: ["latin"], // Specify the subsets required
 });
-
+import { dark } from '@clerk/themes'
 export const metadata: Metadata = {
   title: "Blog App",
   description: "Tech Blog",
@@ -19,7 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider appearance={{
+      baseTheme: dark,
+    }}>
       <html lang="en">
         <body className={inter.className}>
           <ToastContainer

@@ -51,9 +51,9 @@ export default function Signin() {
             } else {
                 toast.error("Verification failed. Check the code and try again.");
             }
-        } catch (error) {
-            console.error("Sign-up error:", JSON.stringify(error, null, 2));
-            toast.error("Something went wrong during sign-in.");
+        } catch (error: any) {
+            console.error("Sign-up error:", JSON.stringify(error.errors[0].message, null, 2));
+            toast.error(error.errors[0].message);
         } finally {
             setLoading(false);
         }
@@ -74,7 +74,7 @@ export default function Signin() {
                 redirectUrlComplete: '/',
             });
         } catch (error: any) {
-            console.error("Google OAuth error:", JSON.stringify(error, null, 2));
+            console.error("Google OAuth error:", JSON.stringify(error.errors[0].message, null, 2));
             toast.error("Failed to sign in with Google.");
         }
     };
@@ -105,7 +105,7 @@ export default function Signin() {
                         />
                     </div>
                     <div>
-                        <button type="submit" className=" bg-neutral-500 hover:bg-neutral-800 transition ease-in-out duration-200 p-2 rounded-xl min-w-full ">Submit</button>
+                        <button type="submit" className=" bg-neutral-500 hover:bg-neutral-800 transition ease-in-out duration-200 p-2 rounded-xl min-w-full "> {loading ? "Submitting..." : "Submit"}</button>
                     </div>
                     <div>
                         <button

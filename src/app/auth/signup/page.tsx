@@ -61,8 +61,8 @@ export default function Signup() {
             setPendingVerification(true);
             toast.success("Verification email sent. Check your inbox.");
         } catch (error: any) {
-            console.error("Sign-up error:", JSON.stringify(error, null, 2));
-            toast.error("Something went wrong during sign-up.");
+            console.error("Sign-up error:", JSON.stringify(error.errors[0].message, null, 2));
+            toast.error(error.errors[0].message);
         } finally {
             setLoading(false);
         }
@@ -92,7 +92,7 @@ export default function Signup() {
                 toast.error("Verification failed. Check the code and try again.");
             }
         } catch (error: any) {
-            console.error("Verification error:", JSON.stringify(error, null, 2));
+            console.error("Verification error:", JSON.stringify(error.errors[0].message, null, 2));
             toast.error("Verification failed. Please try again.");
         } finally {
             setLoading(false);
@@ -120,7 +120,7 @@ export default function Signup() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h-screen flex-col">
             {!pendingVerification ? (
                 <form
                     className="flex flex-col bg-zinc-900 p-10 rounded-md gap-4 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-200 rounded-tl-[70px] rounded-br-[80px]"
@@ -197,8 +197,10 @@ export default function Signup() {
                     <p className="text-neutral-500 hover:text-neutral-300 cursor-pointer text-sm text-center">
                         <Link href="/auth/signin">Already registered? Sign In</Link>
                     </p>
-
+                    {/* CAPTCHA Widget
+                    <div id="clerk-captcha" className="scale-90"></div> */}
                 </form>
+
             ) : (
                 <form
                     className="flex flex-col bg-zinc-900 p-10 rounded-md gap-4 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-200 rounded-tl-[70px] rounded-br-[80px]"
@@ -230,6 +232,7 @@ export default function Signup() {
                     </div>
                 </form>
             )}
+
         </div>
     );
 }
